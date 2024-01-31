@@ -5,7 +5,7 @@ public class Main {
     static HashMap<String, int[]> setup = new HashMap<>();
 
     public static void main(String[] args) {
-
+        
         place("wp:7,1");
         place("bp:2,1");
 

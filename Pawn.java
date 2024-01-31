@@ -18,7 +18,7 @@ public class Pawn extends Piece{
             hasMoved = true;
 
             Piece replace = this;
-            if (movement[1] == 0 || movement[1] == 1){
+            if (movement[0] == 0 || movement[0] == 7){
                 Scanner scanner = new Scanner(System.in);
                 System.out.println("pice promotion, select pice: Q, R, N, B");
                 String newPice = scanner.nextLine();
