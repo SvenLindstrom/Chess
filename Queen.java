@@ -17,56 +17,31 @@
         private boolean isPathClear(Piece[][] board, int[] position, int[] newPos) {
             if (position[0] == newPos[0] || position[1] == newPos[1]) {
                 // behaviour as a rook
-                int direction;
-                if (position[0] == newPos[0]) {
-                    // stays in same row, changes column
-                    direction = 1;
-                }
-                else {
-                    // stays in same columns, changes row
-                    direction = 0;
-                }
+                int direction = position[0] == newPos[0]? 1 : 0;
 
-                // setting range for for loop
-                int start = position[direction];
-                int end = newPos[direction];
-                if(position[direction] > newPos[direction]) {
-                    start = newPos[direction];
-                    end = position[direction];
-                }
+                int rowmult = direction == 0? 1: 0;
+                int colmult = direction == 0? 0: 1;
 
-                for (int i = start + 1; i < end; i++) {
-                    if(direction == 1) {
-                        // column index changes
-                        if (board[position[0]][i] != null) {
-                            return false;
-                        }
-                    }else {
-                        // row index changes
-                        if (board[i][position[1]] != null) {
-                            return false;
-                        }
+                int totalSteps = Math.abs(position[direction] - newPos[direction]);
+
+                for (int i = 1; i < totalSteps; i++) {
+                    if(board[position[0] + (i * rowmult)][position[1] + (i * colmult)] != null){
+                        return false;
                     }
                 }
             }
             else {
                 // behaviour as a bishop
                 int totalSteps = Math.abs(newPos[0] - position[0]);
+                int rowMult = newPos[0] > position[0]? 1: -1;
+                int colMult = newPos[1] > position[1]? 1: -1;
 
-                if (newPos[0] > position[0]) { // checks if it goes left --> position increases
-                    for (int i = 1; i < totalSteps; i++) {
-                        if (board[position[0] + i][position[1] + i] != null) {
-                            return false;
-                        }
+                for (int i = 1; i < totalSteps; i++) {
+                    if (board[position[0] + i *rowMult][position[1] + i * colMult] != null) {
+                        return false;
                     }
                 }
-                else {
-                    for (int i = 1; i < totalSteps; i++) {
-                        if (board[position[0] - i][position[1] - i] != null) {
-                            return false;
-                        }
-                    }
-                }
+                return true;
             }
             return true;
         }

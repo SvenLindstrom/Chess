@@ -27,13 +27,13 @@ public class Pawn extends Piece{
                         replace = new Queen(color);
                     }
                     case "R" -> {
-                        replace = new Rooks(color);
+                        replace = new Rook(color);
                     }
                     case "B" -> {
                         replace = new Bishop(color);
                     }
                     case "N" -> {
-                        replace = new Knights(color);
+                        replace = new Knight(color);
                     }
                 }
             }

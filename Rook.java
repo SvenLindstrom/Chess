@@ -1,6 +1,6 @@
-public class Rooks extends Piece {
+public class Rook extends Piece {
 
-    public Rooks(String color) {
+    public Rook(String color) {
         super(color);
     }
 
@@ -22,29 +22,21 @@ public class Rooks extends Piece {
         return true;
     }
     private boolean coalition(Piece[][] board, int[] position, int[] movement){
-        int direction = 0;
-        if(position[0] == movement[0]){
-            direction = 1;
-        }
-        int start = movement[direction];;
-        int end = position[direction];
-        if(position[direction] < movement[direction]) {
-            start = position[direction];
-            end = movement[direction];
-        }
-        for (int i = start + 1; i < end; i++) {
-            if(direction == 1){
-                if (board[position[0]][i] != null) {
-                    return false;
-                }
-            }else {
-                if (board[i][position[1]] != null) {
-                    return false;
-                }
+        int direction = position[0] == movement[0]? 1 : 0;
+
+        int rowmult = direction == 0? 1: 0;
+        int colmult = direction == 0? 0: 1;
+
+        int totalSteps = Math.abs(position[direction] - movement[direction]);
+
+        for (int i = 1; i < totalSteps; i++) {
+            if(board[position[0] + (i * rowmult)][position[1] + (i * colmult)] != null){
+                return false;
             }
         }
         return true;
     }
+
     private boolean legal(int[] position, int[] movement){
         if(position[0] == movement[0] || position[1] == movement[1]){
             return true;

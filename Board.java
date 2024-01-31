@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Board {
     private Piece[][] board;
 
@@ -14,12 +12,12 @@ public class Board {
     public void setBoard() {
         // black
         String color = "black";
-        board[0][0] = new Rooks(color);
-        board[0][7] = new Rooks(color);
+        board[0][0] = new Rook(color);
+        board[0][7] = new Rook(color);
         board[0][2] = new Bishop(color);
         board[0][5] = new Bishop(color);
-        board[0][6] = new Knights(color);
-        board[0][1] = new Knights(color);
+        board[0][6] = new Knight(color);
+        board[0][1] = new Knight(color);
         board[0][3] = new King(color);
         board[0][4] = new Queen(color);
         for (int i = 0; i < 8; i++) {
@@ -28,26 +26,26 @@ public class Board {
 
         // white
         color = "white";
-        board[7][0] = new Rooks(color);
-        board[7][1] = new Knights(color);
+        board[7][0] = new Rook(color);
+        board[7][1] = new Knight(color);
         board[7][2] = new Bishop(color);
         board[7][3] = new King(color);
         board[7][4] = new Queen(color);
         board[7][5] = new Bishop(color);
-        board[7][6] = new Knights(color);
-        board[7][7] = new Rooks(color);
+        board[7][6] = new Knight(color);
+        board[7][7] = new Rook(color);
         for (int i = 0; i < 8; i++) {
             board[6][i] = new Pawn(color);
         }
     }
 
-    public boolean validatPice(int[] cords, String player){
+    public boolean validatePiece(int[] cords, String player){
         if((board[cords[0]][cords[1]] != null) && board[cords[0]][cords[1]].color.equals(player)){
             return true;
         }
         return false;
     }
-    public boolean movePice(int[] cords, int[] move){
+    public boolean movePiece(int[] cords, int[] move){
         return board[cords[0]][cords[1]].move(board, cords, move);
     }
     public boolean kingCheck(int[] move){

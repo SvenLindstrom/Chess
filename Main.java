@@ -5,13 +5,12 @@ public class Main {
     static HashMap<String, int[]> setup = new HashMap<>();
 
     public static void main(String[] args) {
-        
-        place("wp:7,1");
-        place("bp:2,1");
+        place("wQ:5,5");
+        place("wp:5,7");
 
         Piece[][] bored = parseSetup(setup);
 
-        Chess chess = new Chess();
+        Chess chess = new Chess(bored);
         chess.startGame();
 
     }
@@ -21,7 +20,6 @@ public class Main {
          var cords = piceu[1].split(",");
          int[] intCords = new int[]{Integer.parseInt(cords[0]), Integer.parseInt(cords[1])};
          setup.put(piceu[0], intCords);
-
     }
 
     private static Piece[][] parseSetup(HashMap<String, int[]> setup){
@@ -41,13 +39,13 @@ public class Main {
     private static Piece getPice(char type, String color){
         switch (type){
             case 'R' -> {
-                return new Rooks(color);
+                return new Rook(color);
             }
             case 'B' -> {
                 return new Bishop(color);
             }
             case 'N' -> {
-                return new Knights(color);
+                return new Knight(color);
             }
             case 'K' -> {
                 return new King(color);
@@ -61,7 +59,4 @@ public class Main {
         }
         return null;
     }
-
-
-
 }

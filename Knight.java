@@ -1,6 +1,6 @@
 
-    public class Knights extends Piece{
-        public Knights(String color) {
+    public class Knight extends Piece{
+        public Knight(String color) {
             super(color);
         }
 
