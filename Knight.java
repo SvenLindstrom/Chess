@@ -4,7 +4,7 @@
             super(color);
         }
 
-        public boolean move(Piece[][] board, int[] position, int[] newPos) {
+        public boolean move(Piece[][] board, int[] position, int[] newPos, String color) {
             if (moveIsAllowed(position, newPos) && checkNewPos(board, newPos)){
                 board[newPos[0]][newPos[1]] = this;
                 board[position[0]][position[1]] = null;

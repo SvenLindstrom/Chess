@@ -5,7 +5,7 @@
         }
 
         @Override
-        public boolean move(Piece[][] board, int[] position, int[] newPos) {
+        public boolean move(Piece[][] board, int[] position, int[] newPos, String color) {
             if (isMoveAllowed(position, newPos) && checkNewPos(board, newPos) && isPathClear(board, position, newPos)){
                 board[newPos[0]][newPos[1]] = this;
                 board[position[0]][position[1]] = null;

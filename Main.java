@@ -5,8 +5,10 @@ public class Main {
     static HashMap<String, int[]> setup = new HashMap<>();
 
     public static void main(String[] args) {
-        place("wQ:5,5");
-        place("wp:5,7");
+        place("wR:5,5");
+        place("wQ:2,5");
+        place("wB:5,4");
+        place("wp:5,6");
 
         Piece[][] bored = parseSetup(setup);
 
