@@ -26,7 +26,7 @@ public class Chess {
             System.out.print("Where to move: ");
             int move = scanner.nextInt();
             int[] moveCord = parse(move);
-gi
+
             boolean kingAttack = board.kingCheck(moveCord);
             if(board.outOfBounce(moveCord) && !board.movePiece(pieceCord, moveCord)){
                 System.out.println("invalid move");
