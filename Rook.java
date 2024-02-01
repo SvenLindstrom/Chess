@@ -30,13 +30,11 @@ public class Rook extends Piece {
         int start = Math.min(position[direction], movement[direction]);
         int end = start == position[direction]? movement[direction]: position[direction];
 
-
         Object[] picesColitionN = direction == 0? board[position[0]]: Arrays.stream(board).map(x -> x[position[1]]).toArray();
 
-        long picesColitionNN = Arrays.stream(picesColitionN, start + 1, end).filter(Objects::nonNull).count();
+        return Arrays.stream(picesColitionN, start + 1, end).noneMatch(Objects::nonNull);
 
-        return picesColitionNN == 0;
-
+        //long picesColitionNN = Arrays.stream(picesColitionN, start + 1, end).filter(Objects::nonNull).count();
         //.max(position[direction], movement[direction]);
         //int rowMult = direction == 0? 1: 0;
         //int colMult = direction == 0? 0: 1;

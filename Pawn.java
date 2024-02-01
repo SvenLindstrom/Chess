@@ -21,20 +21,13 @@ public class Pawn extends Piece{
             if (movement[0] == 0 || movement[0] == 7){
                 Scanner scanner = new Scanner(System.in);
                 System.out.println("pice promotion, select pice: Q, R, N, B");
-                String newPice = scanner.nextLine();
+                String newPice = scanner.nextLine().toLowerCase();
+
                 switch (newPice){
-                    case "Q" -> {
-                        replace = new Queen(color);
-                    }
-                    case "R" -> {
-                        replace = new Rook(color);
-                    }
-                    case "B" -> {
-                        replace = new Bishop(color);
-                    }
-                    case "N" -> {
-                        replace = new Knight(color);
-                    }
+                    case "q" -> replace = new Queen(color);
+                    case "r" -> replace = new Rook(color);
+                    case "b" -> replace = new Bishop(color);
+                    case "n" -> replace = new Knight(color);
                 }
             }
             board[movement[0]][movement[1]] = replace;
@@ -54,6 +47,7 @@ public class Pawn extends Piece{
                     && board[movement[0]][movement[1]] != null
                     && !board[movement[0]][movement[1]].color.equals(this.color));
         }
+
         else return position[0] + (direction * 2) == movement[0]
                 && !hasMoved
                 && board[movement[0] - 1][movement[1]] == null
