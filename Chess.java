@@ -38,12 +38,7 @@ public class Chess {
                 System.exit(1);
             }
 
-            if (currentPlayer.equals("white")){
-                currentPlayer = "black";
-            }
-            else {
-                currentPlayer = "white";
-            }
+            currentPlayer = currentPlayer.equals("white")? "black": "white";
         }
     }
 

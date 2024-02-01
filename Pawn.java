@@ -44,24 +44,24 @@ public class Pawn extends Piece{
         return false;
     }
     private boolean legal(Piece[][] board, int[] position, int[] movement, int direction){
-        if(position[1] == movement[1]){
-            if(position[0] + (direction) == movement[0] && board[movement[0]][movement[1]] == null){
-                return true;
-            } else if (position[0] + (direction * 2) == movement[0]
-                    && !hasMoved
-                    && board[movement[0]-1][movement[1]] == null
-                    && board[movement[0]][movement[1]] == null) {
-                return true;
+
+        if(position[0] + direction == movement[0]) {
+
+            if (position[1] == movement[1]) {
+                return board[movement[0]][movement[1]] == null;
             }
-            return false;
-        }else {
-            if ((position[1] - 1 == movement[1] || position[1] + 1 == movement[1]) && position[0] + direction == movement[0]){
-                if(board[movement[0]][movement[1]] != null && !board[movement[0]][movement[1]].color.equals(this.color)){
-                    return true;
-                }
-            }
-            return false;
+            return ((position[1] - 1 == movement[1] || position[1] + 1 == movement[1])
+                    && board[movement[0]][movement[1]] != null
+                    && !board[movement[0]][movement[1]].color.equals(this.color));
         }
+        else return position[0] + (direction * 2) == movement[0]
+                && !hasMoved
+                && board[movement[0] - 1][movement[1]] == null
+                && board[movement[0]][movement[1]] == null;
+    }
+
+    private boolean friendlyFire(Piece[][] board, int[] movement){
+        return board[movement[0]][movement[1]] == null || !this.color.equals(board[movement[0]][movement[1]].color);
     }
 
     @Override
