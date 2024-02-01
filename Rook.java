@@ -11,26 +11,26 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean move(Piece[][] board, int[] position, int[] movement) {
-        if(friendlyFire(board, movement) && legal(position, movement) && coalition(board, position, movement)){
-            board[movement[0]][movement[1]] = this;
-            board[position[0]][position[1]] = null;
+    public boolean move(Piece[][] board, int[] position, int[] movement, String color) {
+
+        if(friendlyFire(board, movement, color) && legal(position, movement) && coalition(board, position, movement)){
+            board[movement[row]][movement[colum]] = board[position[row]][position[colum]];
+            board[position[row]][position[colum]] = null;
             return true;
         }
         return false;
     }
 
-
-    private boolean friendlyFire(Piece[][] board, int[] movement){
-        return board[movement[0]][movement[1]] == null || !this.color.equals(board[movement[0]][movement[1]].color);
-    }
-    private boolean coalition(Piece[][] board, int[] position, int[] movement){
-        int direction = position[0] == movement[0]? 1 : 0;
+//    private boolean friendlyFire(Piece[][] board, int[] movement){
+//        return board[movement[0]][movement[1]] == null || !this.color.equals(board[movement[0]][movement[1]].color);
+//    }
+    private static boolean coalition(Piece[][] board, int[] position, int[] movement){
+        int direction = position[row] == movement[row]? colum : row;
 
         int start = Math.min(position[direction], movement[direction]);
         int end = start == position[direction]? movement[direction]: position[direction];
 
-        Object[] picesColitionN = direction == 0? board[position[0]]: Arrays.stream(board).map(x -> x[position[1]]).toArray();
+        Object[] picesColitionN = direction == row? board[position[row]]: Arrays.stream(board).map(x -> x[position[colum]]).toArray();
 
         return Arrays.stream(picesColitionN, start + 1, end).noneMatch(Objects::nonNull);
 
@@ -55,8 +55,8 @@ public class Rook extends Piece {
 //        }
     }
 
-    private boolean legal(int[] position, int[] movement){
-        return position[0] == movement[0] || position[1] == movement[1];
+    private static boolean legal(int[] position, int[] movement){
+        return position[colum] == movement[colum] || position[row] == movement[row];
     }
 
     @Override
