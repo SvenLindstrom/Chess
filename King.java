@@ -2,19 +2,17 @@ public class King extends Piece{
     public King(String color) {
         super(color);
     }
-    @Override
-    public boolean move(Piece[][] board, int[] position, int[] movement, String color) {
-        if (legal(position, movement) && !friendlyFire(board, movement, color)){
-            board[movement[row]][movement[colum]] = board[position[row]][position[colum]];
-            board[position[row]][position[colum]] = null;
-            return true;
-        }
-        return false;
+
+    protected static boolean legal(Piece[][] board, int[] position, int[] movement , String color){
+
+        int rowChange = Math.abs(position[row] - movement[row]);
+        int colChange = Math.abs(position[colum] - movement[colum]);
+
+        return inRange(rowChange) && inRange(colChange);
     }
 
-    private static boolean legal(int[] position, int[] movement){
-        return movement[row] <= position[row] + 1 && movement[row] >= position[row] - 1
-                && movement[colum] <= position[colum] + 1 && movement[colum] >= position[colum] - 1;
+    private static boolean inRange(int num){
+        return num == 1 || num == 0;
     }
 
 //    private boolean friendlyFire(Piece[][] board, int[] movement){

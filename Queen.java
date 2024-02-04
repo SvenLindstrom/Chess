@@ -17,6 +17,7 @@
         private boolean isPathClear(Piece[][] board, int[] position, int[] newPos) {
             if (position[0] == newPos[0] || position[1] == newPos[1]) {
                 // behaviour as a rook
+
                 int direction = position[0] == newPos[0]? 1 : 0;
 
                 int rowmult = direction == 0? 1: 0;
