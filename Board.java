@@ -80,12 +80,6 @@ public class Board {
 
     @Override
     public String toString() {
-        // rook = R
-        // knight = k
-        // bithop = b
-        // king = k
-        // queen = q
-        // pawn = p
 
         StringBuilder builder = new StringBuilder();
         System.out.println("  1 2 3 4 5 6 7 8");
@@ -104,12 +98,9 @@ public class Board {
                     builder.append(board[i][j]+" ");
                 }
                 builder.append("\u001B[0m");
-                //builder.append(" ");
             }
             builder.append("\n");
         }
         return builder.toString();
     }
-
-    // print
 }

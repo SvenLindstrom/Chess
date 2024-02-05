@@ -1,67 +1,62 @@
+import java.util.Arrays;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Pawn extends Piece{
+    protected final boolean hasMoved;
     public Pawn(String color) {
         super(color);
+        hasMoved = false;
     }
-    private boolean hasMoved = false;
+    public Pawn(String color, boolean hasMoved){
+        super(color);
+        this.hasMoved = hasMoved;
+    }
 
-    @Override
-    public boolean move(Piece[][] board, int[] position, int[] movement) {
-
-        int direction = 1;
-
-        if(this.color.equals("white")){
-            direction = -1;
-        }
-        if(legal(board, position, movement, direction)){
-            hasMoved = true;
-
-            Piece replace = this;
-            if (movement[0] == 0 || movement[0] == 7){
-                Scanner scanner = new Scanner(System.in);
-                System.out.println("pice promotion, select pice: Q, R, N, B");
-                String newPice = scanner.nextLine();
-                switch (newPice){
-                    case "Q" -> {
-                        replace = new Queen(color);
-                    }
-                    case "R" -> {
-                        replace = new Rook(color);
-                    }
-                    case "B" -> {
-                        replace = new Bishop(color);
-                    }
-                    case "N" -> {
-                        replace = new Knight(color);
-                    }
-                }
+    protected boolean testMovie(Piece[][] board, int[] position, int[] movement) {
+        String color = board[position[row]][position[colum]].color;
+        if(friendlyFire(board, movement, color) && legal(board, position, movement, color)){
+            if(movement[row] == 0 || movement[row] == 7){
+                board[movement[row]][movement[colum]] = pawnPromotion(color);
             }
-            board[movement[0]][movement[1]] = replace;
-            board[position[0]][position[1]] = null;
             return true;
         }
         return false;
     }
-    private boolean legal(Piece[][] board, int[] position, int[] movement, int direction){
-        if(position[1] == movement[1]){
-            if(position[0] + (direction) == movement[0] && board[movement[0]][movement[1]] == null){
-                return true;
-            } else if (position[0] + (direction * 2) == movement[0]
-                    && !hasMoved
-                    && board[movement[0]-1][movement[1]] == null
-                    && board[movement[0]][movement[1]] == null) {
-                return true;
-            }
-            return false;
-        }else {
-            if ((position[1] - 1 == movement[1] || position[1] + 1 == movement[1]) && position[0] + direction == movement[0]){
-                if(board[movement[0]][movement[1]] != null && !board[movement[0]][movement[1]].color.equals(this.color)){
-                    return true;
-                }
-            }
-            return false;
+
+    protected static boolean legal(Piece[][] board, int[] position, int[] movement , String color){
+        int direction = color.equals("white")? -1: 1;
+        if (position[colum] == movement[colum]) {
+            int start = direction == 1? position[row] + 1: movement[row];
+            int end = direction == 1? movement[row] + 1: position[row];
+
+            Object[] test = Arrays.stream(board, start, end).map(x -> x[position[colum]]).toArray();
+            return Arrays.stream(test).noneMatch(Objects::isNull) && (test.length == 1 || (test.length == 2 && !((Pawn) board[position[row]][position[colum]]).hasMoved));
+
         }
+        else{
+            return ((position[colum] - 1 == movement[colum] || position[colum] + 1 == movement[colum])
+                    && board[movement[row]][movement[colum]] != null
+                    && !board[movement[row]][movement[colum]].color.equals(color));
+
+        }
+    }
+
+    private static Piece pawnPromotion(String color){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("piece promotion, select piece: Q, R, N, B");
+        String newPiece = scanner.nextLine().toLowerCase();
+
+        Piece replace;
+        switch (newPiece){
+            case "q" -> replace = new Queen(color);
+            case "r" -> replace = new Rook(color);
+            case "b" -> replace = new Bishop(color);
+            case "n" -> replace = new Knight(color);
+            default -> replace = new Pawn(color, true);
+        }
+        scanner.close();
+        return replace;
     }
 
     @Override

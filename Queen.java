@@ -5,7 +5,7 @@
         }
 
         @Override
-        public boolean move(Piece[][] board, int[] position, int[] newPos) {
+        public boolean move(Piece[][] board, int[] position, int[] newPos, String color) {
             if (isMoveAllowed(position, newPos) && checkNewPos(board, newPos) && isPathClear(board, position, newPos)){
                 board[newPos[0]][newPos[1]] = this;
                 board[position[0]][position[1]] = null;
@@ -17,6 +17,7 @@
         private boolean isPathClear(Piece[][] board, int[] position, int[] newPos) {
             if (position[0] == newPos[0] || position[1] == newPos[1]) {
                 // behaviour as a rook
+
                 int direction = position[0] == newPos[0]? 1 : 0;
 
                 int rowmult = direction == 0? 1: 0;

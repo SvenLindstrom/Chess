@@ -19,10 +19,12 @@ public class Chess {
             System.out.print("Select Piece to move: ");
             int piece = scanner.nextInt();
             int[] pieceCord = parse(piece);
-            if(!board.validatePiece(pieceCord, currentPlayer)){
+
+            if(!board.outOfBounce(pieceCord) || !board.validatePiece(pieceCord, currentPlayer)){
                 System.out.println("Invalid piece");
                 continue;
             }
+
             System.out.print("Where to move: ");
             int move = scanner.nextInt();
             int[] moveCord = parse(move);
@@ -32,22 +34,18 @@ public class Chess {
                 System.out.println("invalid move");
                 continue;
             }
+
             if (kingAttack){
                 System.out.println(board);
                 System.out.println(currentPlayer + " Wins the game");
                 System.exit(1);
             }
 
-            if (currentPlayer.equals("white")){
-                currentPlayer = "black";
-            }
-            else {
-                currentPlayer = "white";
-            }
+            currentPlayer = currentPlayer.equals("white")? "black": "white";
         }
     }
 
-    private int[] parse(int input){
+    private static int[] parse(int input){
         return new int[]{input % 10 - 1, input / 10 - 1};
     }
 
