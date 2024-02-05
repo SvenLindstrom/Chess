@@ -23,8 +23,8 @@ public class Board {
         board[start][0] = new Rook(color);
         board[start][1] = new Knight(color);
         board[start][2] = new Bishop(color);
-        board[start][3] = new King(color);
-        board[start][4] = new Queen(color);
+        board[start][3] = new Queen(color);
+        board[start][4] = new King(color);
         board[start][5] = new Bishop(color);
         board[start][6] = new Knight(color);
         board[start][7] = new Rook(color);

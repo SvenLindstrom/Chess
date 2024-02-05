@@ -13,7 +13,7 @@ public class Pawn extends Piece{
         String color = board[position[row]][position[colum]].color;
         if(friendlyFire(board, newPos, color) && isMoveAllowed(board, position, newPos, color)){
             if(newPos[row] == 0 || newPos[row] == 7){
-                board[newPos[row]][newPos[colum]] = pawnPromotion(board[position[row]][position[colum]]);
+                board[position[row]][position[colum]] = pawnPromotion(board[position[row]][position[colum]]);
             }
             return true;
         }
@@ -37,9 +37,10 @@ public class Pawn extends Piece{
     }
 
     private static Piece pawnPromotion(Piece pawn){
+
         Scanner scanner = new Scanner(System.in);
         System.out.println("piece promotion, select piece: Q, R, N, B");
-        String newPiece = scanner.nextLine().toLowerCase();
+        String newPiece = scanner.nextLine().strip().toLowerCase();
 
         Piece replace;
         switch (newPiece){
@@ -49,7 +50,6 @@ public class Pawn extends Piece{
             case "n" -> replace = new Knight(pawn.color);
             default -> replace = pawn;
         }
-        scanner.close();
         return replace;
     }
 

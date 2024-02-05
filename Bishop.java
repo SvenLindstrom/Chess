@@ -27,8 +27,8 @@ public class Bishop extends Piece{
         int totalSteps = Math.abs(newPos[row] - position[row]);
 
         return IntStream.range(1,totalSteps)
-                .mapToObj(x -> board[higherOnBoard[row] + x][(higherOnBoard[colum] + x) * colMult])
-                .anyMatch(Objects::nonNull);
+                .mapToObj(x -> board[higherOnBoard[row] + x][higherOnBoard[colum] + (x * colMult)])
+                .noneMatch(Objects::nonNull);
     }
     @Override
     public String toString() {

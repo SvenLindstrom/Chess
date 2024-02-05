@@ -5,10 +5,8 @@ public class Main {
     static HashMap<String, int[]> setup = new HashMap<>();
 
     public static void main(String[] args) {
-        place("wR:5,5");
-        place("wQ:2,5");
-        place("wB:5,4");
-        place("wp:5,6");
+        place("wp:2,2");
+
 
         Piece[][] bored = parseSetup(setup);
 
@@ -17,8 +15,8 @@ public class Main {
 
     }
 
-    private static void place(String pice){
-         var piceu = pice.split(":");
+    private static void place(String piece){
+         var piceu = piece.split(":");
          var cords = piceu[1].split(",");
          int[] intCords = new int[]{Integer.parseInt(cords[0]), Integer.parseInt(cords[1])};
          setup.put(piceu[0], intCords);
