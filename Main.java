@@ -12,7 +12,7 @@ public class Main {
 
         Piece[][] bored = parseSetup(setup);
 
-        Chess chess = new Chess(bored);
+        Chess chess = new Chess();
         chess.startGame();
 
     }

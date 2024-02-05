@@ -27,7 +27,7 @@ public class Pawn extends Piece{
             int end = direction == 1? newPos[row] + 1: position[row];
 
             Object[] test = Arrays.stream(board, start, end).map(x -> x[position[colum]]).toArray();
-            return Arrays.stream(test).noneMatch(Objects::isNull) && (test.length == 1 || (test.length == 2 && !((Pawn) board[position[row]][position[colum]]).hasMoved));
+            return Arrays.stream(test).noneMatch(Objects::nonNull) && (test.length == 1 || (test.length == 2 && !((Pawn) board[position[row]][position[colum]]).hasMoved));
         }
         else{
             return ((position[colum] - 1 == newPos[colum] || position[colum] + 1 == newPos[colum])

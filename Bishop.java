@@ -23,7 +23,7 @@ public class Bishop extends Piece{
     protected static boolean isPathClear(Piece[][] board, int[] position, int[] newPos) {
 
         int[] higherOnBoard = newPos[row] > position[row]? position: newPos;
-        int colMult = newPos[colum] > position[colum]? 1: -1;
+        int colMult = Math.max(position[colum], newPos[colum]) == higherOnBoard[colum]? -1: 1;
         int totalSteps = Math.abs(newPos[row] - position[row]);
 
         return IntStream.range(1,totalSteps)
