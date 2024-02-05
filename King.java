@@ -5,15 +5,15 @@ public class King extends Piece{
 
 
     @Override
-    protected boolean testMovie(Piece[][] board, int[] position, int[] movement) {
+    protected boolean testMove(Piece[][] board, int[] position, int[] newPos) {
         String color = board[position[row]][position[colum]].color;
-        return friendlyFire(board, movement, color) && legal(position, movement);
+        return friendlyFire(board, newPos, color) && isMoveAllowed(position, newPos);
     }
 
-    protected static boolean legal(int[] position, int[] movement){
+    protected static boolean isMoveAllowed(int[] position, int[] newPos){
 
-        int rowChange = Math.abs(position[row] - movement[row]);
-        int colChange = Math.abs(position[colum] - movement[colum]);
+        int rowChange = Math.abs(position[row] - newPos[row]);
+        int colChange = Math.abs(position[colum] - newPos[colum]);
 
         return inRange(rowChange) && inRange(colChange);
     }

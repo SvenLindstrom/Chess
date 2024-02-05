@@ -20,7 +20,7 @@ public class Chess {
             int piece = scanner.nextInt();
             int[] pieceCord = parse(piece);
 
-            if(!board.outOfBounce(pieceCord) || !board.validatePiece(pieceCord, currentPlayer)){
+            if(!board.outOfBounds(pieceCord) || !board.validatePiece(pieceCord, currentPlayer)){
                 System.out.println("Invalid piece");
                 continue;
             }
@@ -30,7 +30,7 @@ public class Chess {
             int[] moveCord = parse(move);
 
             boolean kingAttack = board.kingCheck(moveCord);
-            if(board.outOfBounce(moveCord) && !board.movePiece(pieceCord, moveCord)){
+            if(board.outOfBounds(moveCord) && !board.movePiece(pieceCord, moveCord)){
                 System.out.println("invalid move");
                 continue;
             }
