@@ -30,7 +30,7 @@ public class Chess {
             int[] moveCord = parse(move);
 
             boolean kingAttack = board.kingCheck(moveCord);
-            if(board.outOfBounce(moveCord) && !board.movePiece(pieceCord, moveCord, currentPlayer)){
+            if(board.outOfBounce(moveCord) && !board.movePiece(pieceCord, moveCord)){
                 System.out.println("invalid move");
                 continue;
             }

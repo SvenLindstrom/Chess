@@ -45,8 +45,8 @@ public class Board {
         }
         return false;
     }
-    public boolean movePiece(int[] cords, int[] move, String color){
-        return board[cords[0]][cords[1]].move(board, cords, move, color);
+    public boolean movePiece(int[] cords, int[] move){
+        return board[cords[0]][cords[1]].move(board, cords, move);
     }
     public boolean kingCheck(int[] move){
         if (board[move[0]][move[1]] instanceof King){
@@ -64,12 +64,6 @@ public class Board {
 
     @Override
     public String toString() {
-        // rook = R
-        // knight = k
-        // bithop = b
-        // king = k
-        // queen = q
-        // pawn = p
 
         StringBuilder builder = new StringBuilder();
         System.out.println("  1 2 3 4 5 6 7 8");
@@ -88,12 +82,9 @@ public class Board {
                     builder.append(board[i][j]+" ");
                 }
                 builder.append("\u001B[0m");
-                //builder.append(" ");
             }
             builder.append("\n");
         }
         return builder.toString();
     }
-
-    // print
 }

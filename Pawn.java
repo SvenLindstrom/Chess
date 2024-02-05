@@ -13,13 +13,17 @@ public class Pawn extends Piece{
         this.hasMoved = hasMoved;
     }
 
-    @Override
-    public  boolean move(Piece[][] board, int[] position, int[] movement, String color) {
-        if(super.move(board, position, movement, color) && ((movement[row] == 0 || movement[row] == 7))){
-            board[movement[row]][movement[colum]] = pawnPromotion(color);
+    protected boolean testMovie(Piece[][] board, int[] position, int[] movement) {
+        String color = board[position[row]][position[colum]].color;
+        if(friendlyFire(board, movement, color) && legal(board, position, movement, color)){
+            if(movement[row] == 0 || movement[row] == 7){
+                board[movement[row]][movement[colum]] = pawnPromotion(color);
+            }
+            return true;
         }
         return false;
     }
+
     protected static boolean legal(Piece[][] board, int[] position, int[] movement , String color){
         int direction = color.equals("white")? -1: 1;
         if (position[colum] == movement[colum]) {
@@ -27,8 +31,7 @@ public class Pawn extends Piece{
             int end = direction == 1? movement[row] + 1: position[row];
 
             Object[] test = Arrays.stream(board, start, end).map(x -> x[position[colum]]).toArray();
-
-            return (test.length == 1 || (test.length == 2 && !((Pawn) board[position[row]][position[colum]]).hasMoved)) && Arrays.stream(test).noneMatch(Objects::isNull);
+            return Arrays.stream(test).noneMatch(Objects::isNull) && (test.length == 1 || (test.length == 2 && !((Pawn) board[position[row]][position[colum]]).hasMoved));
 
         }
         else{
