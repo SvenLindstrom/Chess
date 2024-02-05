@@ -1,3 +1,6 @@
+import java.util.Arrays;
+import java.util.stream.IntStream;
+
 public class Board {
     private Piece[][] board;
 
@@ -9,6 +12,8 @@ public class Board {
     public void setBoard(Piece [][] setup){
         board = setup;
     }
+
+    // Lambdas and Streams
     public void setBoard() {
         // black
         String color = "black";
@@ -20,9 +25,13 @@ public class Board {
         board[0][1] = new Knight(color);
         board[0][3] = new King(color);
         board[0][4] = new Queen(color);
-        for (int i = 0; i < 8; i++) {
+
+        // color needs to be final or effectively final
+        String finalColorBlack = color;
+        IntStream.range(0, 8).forEach(i -> board[1][i] = new Pawn(finalColorBlack));
+        /*for (int i = 0; i < 8; i++) {
             board[1][i] = new Pawn(color);
-        }
+        }*/
 
         // white
         color = "white";
@@ -34,11 +43,14 @@ public class Board {
         board[7][5] = new Bishop(color);
         board[7][6] = new Knight(color);
         board[7][7] = new Rook(color);
-        for (int i = 0; i < 8; i++) {
+        String finalColorWhite = color;
+        IntStream.range(0, 8).forEach(i -> board[6][i] = new Pawn(finalColorWhite));
+        /*for (int i = 0; i < 8; i++) {
             board[6][i] = new Pawn(color);
-        }
+        }*/
     }
 
+    // could use optional to see whether it's null or not
     public boolean validatePiece(int[] cords, String player){
         if((board[cords[0]][cords[1]] != null) && board[cords[0]][cords[1]].color.equals(player)){
             return true;
@@ -55,11 +67,15 @@ public class Board {
         return false;
     }
 
+    // Lambdas and Streams
     public boolean outOfBounce(int[] move){
-        if (move[0] >= 0 && move[0] < 8 && move[1] >= 0 && move[1] < 8){
+        //
+        return Arrays.stream(move).allMatch(coord -> coord >= 0 && coord < 8);
+
+        /*if (move[0] >= 0 && move[0] < 8 && move[1] >= 0 && move[1] < 8){
             return true;
         }
-        return false;
+        return false;*/
     }
 
     @Override
@@ -74,7 +90,7 @@ public class Board {
         StringBuilder builder = new StringBuilder();
         System.out.println("  1 2 3 4 5 6 7 8");
         for (int i = 0; i < 8; i++) {
-            builder.append(i+1+" ");
+            builder.append(i + 1 + " ");
             for (int j = 0; j < 8; j++) {
 //                if(j % 2 == 0){
 //                    builder.append("\u001B[40m");

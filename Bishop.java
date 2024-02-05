@@ -14,20 +14,16 @@ public class Bishop extends Piece{
         return false;
     }
 
-    private boolean isGoingBack(int[] position, int[] newPos) {
+    /*private boolean isGoingBack(int[] position, int[] newPos) {
         return (newPos[0] > position[0] && color.equals("white")) ||    // checks if white is going back
                 (newPos[0] < position[0] && color.equals("black"));     // checks if black is going back
-    }
+    }*/
 
     private boolean isMoveAllowed(int[] position, int[] newPos) { // specific for each piece
         int rowMovement = Math.abs(newPos[0] - position[0]);
         int colMovement = Math.abs(newPos[1] - position[1]);
 
-        // this can be simplified
-        if(rowMovement == colMovement) {
-            return true;
-        }
-        return false;
+        return rowMovement == colMovement;
     }
 
     @Override
@@ -49,11 +45,8 @@ public class Bishop extends Piece{
     }
 
     private boolean checkNewPos(Piece[][] board, int[] newPos) {
-        // this can be simplified
-        if (board[newPos[0]][newPos[1]] != null && color.equals(board[newPos[0]][newPos[1]].color)) {
-            return false;
-        }
-        return true;
+        
+        return board[newPos[0]][newPos[1]] == null || !color.equals(board[newPos[0]][newPos[1]].color);
     }
 }
 

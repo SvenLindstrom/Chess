@@ -21,20 +21,12 @@
             boolean firstCase = (rowMovement == 1) && (colMovement == 2);
             boolean secondCase = (rowMovement == 2) && (colMovement == 1);
 
-            // I can also write:
-            //      return firstCase || secondCase
-            if (firstCase || secondCase) {
-                return true;
-            }
-            return false;
+            return firstCase || secondCase;
         }
 
         public boolean checkNewPos(Piece[][] board, int[] newPos) {
             // I can also simplify here
-            if (board[newPos[0]][newPos[1]] != null && color.equals(board[newPos[0]][newPos[1]].color)) {
-                return false;
-            }
-            return true;
+            return board[newPos[0]][newPos[1]] == null || !color.equals(board[newPos[0]][newPos[1]].color);
         }
 
         @Override
