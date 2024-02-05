@@ -7,24 +7,26 @@ public class Rook extends Piece{
         super(color);
     }
 
-    protected boolean testMovie(Piece[][] board, int[] position, int[] movement){
+    protected boolean testMove(Piece[][] board, int[] position, int[] newPos){
         String color = board[position[row]][position[colum]].color;
-        return friendlyFire(board, movement, color) && legal(position, movement) && collision(board, position, movement);
+        return friendlyFire(board, newPos, color) && isMoveAllowed(position, newPos) && isPathClear(board, position, newPos);
     }
 
-    protected static boolean collision(Piece[][] board, int[] position, int[] movement){
-        int direction = position[row] == movement[row]? colum : row;
+    protected static boolean isPathClear(Piece[][] board, int[] position, int[] newPos){
+        int direction = position[row] == newPos[row]? colum : row;
 
-        int start = Math.min(position[direction], movement[direction]);
-        int end = start == position[direction]? movement[direction]: position[direction];
+        int start = Math.min(position[direction], newPos[direction]);
+        int end = Math.max(position[direction], newPos[direction]);
 
-        Object[] pieceCollision= direction == colum? board[position[row]]: Arrays.stream(board).map(x -> x[position[colum]]).toArray();
+        Object[] pieceCollision = direction == colum ?
+                board[position[row]]:
+                Arrays.stream(board).map(x -> x[position[colum]]).toArray();
 
         return Arrays.stream(pieceCollision, start + 1, end).noneMatch(Objects::nonNull);
     }
 
-     protected static boolean legal(int[] position, int[] movement){
-        return position[colum] == movement[colum] || position[row] == movement[row];
+     protected static boolean isMoveAllowed(int[] position, int[] newPos){
+        return position[colum] == newPos[colum] || position[row] == newPos[row];
     }
 
     @Override

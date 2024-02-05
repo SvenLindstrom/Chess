@@ -32,13 +32,13 @@ public class Main {
 
         Piece[][] bored = new Piece[8][8];
         for(String key: setup.keySet()){
-            bored[setup.get(key)[0]-1][setup.get(key)[1]-1] = getPice(key.charAt(1),colorKey.get(key.charAt(0)));
+            bored[setup.get(key)[0]-1][setup.get(key)[1]-1] = getPiece(key.charAt(1),colorKey.get(key.charAt(0)));
         }
 
         return bored;
     }
 
-    private static Piece getPice(char type, String color){
+    private static Piece getPiece(char type, String color){
         switch (type){
             case 'R' -> {
                 return new Rook(color);
