@@ -16,16 +16,6 @@ public abstract class Piece {
         }
         return false;
     };
-
-    @Override
-    public String toString() {
-        if (color.equals("white")){
-            return "\u001B[47m";
-        }
-        else {
-            return "\u001B[40m";
-        }
-    }
     protected abstract boolean testMovie(Piece[][] board, int[] position, int[] movement);
 
     public static void changePosition(Piece[][] board, int[] position , int[] movement){
@@ -35,5 +25,15 @@ public abstract class Piece {
 
     protected static boolean friendlyFire(Piece[][] board, int[] movement, String color){
         return board[movement[row]][movement[colum]] == null || !color.equals(board[movement[row]][movement[colum]].color);
+    }
+
+    @Override
+    public String toString() {
+        if (color.equals("white")){
+            return "\u001B[47m";
+        }
+        else {
+            return "\u001B[40m";
+        }
     }
 }
