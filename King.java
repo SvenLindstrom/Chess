@@ -3,15 +3,14 @@ public class King extends Piece{
         super(color);
     }
 
-
     @Override
     protected boolean testMove(Piece[][] board, int[] position, int[] newPos) {
         String color = board[position[row]][position[colum]].color;
+
         return friendlyFire(board, newPos, color) && isMoveAllowed(position, newPos);
     }
 
     protected static boolean isMoveAllowed(int[] position, int[] newPos){
-
         int rowChange = Math.abs(position[row] - newPos[row]);
         int colChange = Math.abs(position[colum] - newPos[colum]);
 
@@ -26,5 +25,4 @@ public class King extends Piece{
     public String toString() {
         return super.toString() + "K";
     }
-
 }

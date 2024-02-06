@@ -1,11 +1,9 @@
 public abstract class Piece {
-
     protected final String color;
-
     protected static final int row = 0;
     protected static final int colum = 1;
 
-    public Piece(String color){ this.color = color; };
+    public Piece(String color){ this.color = color;}
 
     public boolean move(Piece[][] board, int[] position, int[] newPos){
         if(testMove(board, position, newPos)){
@@ -13,10 +11,9 @@ public abstract class Piece {
             return true;
         }
         return false;
-    };
+    }
 
     protected abstract boolean testMove(Piece[][] board, int[] position, int[] newPos);
-
 
     public static void changePosition(Piece[][] board, int[] position , int[] newPos){
         board[newPos[row]][newPos[colum]] = board[position[row]][position[colum]];

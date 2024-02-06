@@ -36,6 +36,7 @@ public class Chess {
             if (kingAttack){
                 System.out.println(board);
                 System.out.println(currentPlayer + " Wins the game");
+                scanner.close();
                 System.exit(1);
             }
 

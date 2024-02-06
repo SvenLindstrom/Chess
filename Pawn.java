@@ -13,7 +13,7 @@ public class Pawn extends Piece{
         String color = board[position[row]][position[colum]].color;
         if(friendlyFire(board, newPos, color) && isMoveAllowed(board, position, newPos, color)){
             if(newPos[row] == 0 || newPos[row] == 7){
-                board[newPos[row]][newPos[colum]] = pawnPromotion(board[position[row]][position[colum]]);
+                board[position[row]][position[colum]] = pawnPromotion(board[position[row]][position[colum]]);
             }
             return true;
         }
@@ -25,9 +25,9 @@ public class Pawn extends Piece{
         if (position[colum] == newPos[colum]) {
             int start = direction == 1? position[row] + 1: newPos[row];
             int end = direction == 1? newPos[row] + 1: position[row];
-
             Object[] test = Arrays.stream(board, start, end).map(x -> x[position[colum]]).toArray();
-            return Arrays.stream(test).noneMatch(Objects::isNull) && (test.length == 1 || (test.length == 2 && !((Pawn) board[position[row]][position[colum]]).hasMoved));
+
+            return Arrays.stream(test).noneMatch(Objects::nonNull) && (test.length == 1 || (test.length == 2 && !((Pawn) board[position[row]][position[colum]]).hasMoved));
         }
         else{
             return ((position[colum] - 1 == newPos[colum] || position[colum] + 1 == newPos[colum])
@@ -39,8 +39,7 @@ public class Pawn extends Piece{
     private static Piece pawnPromotion(Piece pawn){
         Scanner scanner = new Scanner(System.in);
         System.out.println("piece promotion, select piece: Q, R, N, B");
-        String newPiece = scanner.nextLine().toLowerCase();
-
+        String newPiece = scanner.nextLine().strip().toLowerCase();
         Piece replace;
         switch (newPiece){
             case "q" -> replace = new Queen(pawn.color);
@@ -49,7 +48,6 @@ public class Pawn extends Piece{
             case "n" -> replace = new Knight(pawn.color);
             default -> replace = pawn;
         }
-        scanner.close();
         return replace;
     }
 

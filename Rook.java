@@ -2,7 +2,6 @@ import java.util.Arrays;
 import java.util.Objects;
 
 public class Rook extends Piece{
-
     public Rook(String color) {
         super(color);
     }
@@ -14,10 +13,8 @@ public class Rook extends Piece{
 
     protected static boolean isPathClear(Piece[][] board, int[] position, int[] newPos){
         int direction = position[row] == newPos[row]? colum : row;
-
         int start = Math.min(position[direction], newPos[direction]);
         int end = Math.max(position[direction], newPos[direction]);
-
         Object[] pieceCollision = direction == colum ?
                 board[position[row]]:
                 Arrays.stream(board).map(x -> x[position[colum]]).toArray();
