@@ -1,9 +1,7 @@
 import java.util.Scanner;
-
 public class Chess {
     Board board = new Board();
     String currentPlayer = "white";
-// testing 123
     public Chess(){
         board.setBoard();
     }
