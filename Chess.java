@@ -3,10 +3,10 @@ public class Chess {
     Board board = new Board();
     String currentPlayer = "white";
     public Chess(){
-        board.setBoard();
+        Board.setBoard(board);
     }
     public Chess(Piece[][] boardSetUp){
-        board.setBoard(boardSetUp);
+        board.setBoardTest(boardSetUp);
     }
 
     public void startGame(){
@@ -18,7 +18,7 @@ public class Chess {
             int piece = scanner.nextInt();
             int[] pieceCord = parse(piece);
 
-            if(!board.outOfBounds(pieceCord) || !board.validatePiece(pieceCord, currentPlayer)){
+            if(!Board.outOfBounds(pieceCord) || !Board.validatePiece(pieceCord, currentPlayer, board)){
                 System.out.println("Invalid piece");
                 continue;
             }
@@ -27,10 +27,12 @@ public class Chess {
             int move = scanner.nextInt();
             int[] moveCord = parse(move);
 
-            boolean kingAttack = board.kingCheck(moveCord);
-            if(board.outOfBounds(moveCord) && !board.movePiece(pieceCord, moveCord)){
+            boolean kingAttack = Board.kingCheck(moveCord, board);
+            if(Board.outOfBounds(moveCord) && !Board.movePiece(pieceCord, moveCord, board)){
                 System.out.println("invalid move");
                 continue;
+            }else {
+                board = Board.changePosition(board, pieceCord, moveCord);
             }
 
             if (kingAttack){

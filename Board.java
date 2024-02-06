@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.function.*;
 import java.util.stream.IntStream;
 
 public class Board {
@@ -9,17 +10,24 @@ public class Board {
     public Board() {
         this.board = new Piece[8][8];
     }
+    public Board(Piece[][] setup){
+        this.board = setup;
+    }
 
-    public void setBoard(Piece [][] setup){
+    public void setBoardTest(Piece[][] setup){
         board = setup;
     }
 
-    public void setBoard() {
-        setSide(0, "black");
-        setSide(7, "white");
+    public static void setBoard(Board board) {
+        try{
+        setSide(0, "black", board.board);
+        setSide(7, "white", board.board);}
+        catch (Exception e){
+            System.exit(69);
+        }
     }
 
-    private void setSide(int start, String color){
+    private static void setSide(int start, String color, Piece[][] board){
         board[start][0] = new Rook(color);
         board[start][1] = new Knight(color);
         board[start][2] = new Bishop(color);
@@ -34,46 +42,51 @@ public class Board {
         IntStream.range(0, 8).forEach(i -> board[pawnInt][i] = new Pawn(color));
     }
 
-    public boolean validatePiece(int[] position, String player){
-        return (board[position[row]][position[colum]] != null) && board[position[0]][position[1]].color.equals(player);
+    public static boolean validatePiece(int[] position, String player, Board board){
+        return (board.board[position[row]][position[colum]] != null) && board.board[position[0]][position[1]].color.equals(player);
     }
 
-    public boolean movePiece(int[] position, int[] newPos){
-        return board[position[row]][position[colum]].move(board, position, newPos);
+    public static boolean movePiece(int[] position, int[] newPos, Board board){
+        return board.board[position[row]][position[colum]].move(board.board, position, newPos);
     }
 
-    public boolean kingCheck(int[] newPos){
-        return board[newPos[row]][newPos[colum]] instanceof King;
+    public static Board changePosition( Board board,  int[] position ,  int[] newPos) {
+        Piece[][] newBoard = new Piece[8][8];
+        Piece[][] oldBoard = board.board;
+
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (i == position[row] && j == position[colum] ) newBoard[i][j] = null;
+                else if (i == newPos[row] && j == newPos[colum] ) newBoard[i][j] = oldBoard[position[row]][position[colum]];
+                else newBoard[i][j] = oldBoard[i][j];
+            }
+        }
+        return new Board(newBoard);
     }
 
-    public boolean outOfBounds(int[] position){
+    public static boolean kingCheck(int[] newPos, Board board){
+        return board.board[newPos[row]][newPos[colum]] instanceof King;
+    }
+
+    public static boolean outOfBounds(int[] position){
         return Arrays.stream(position).allMatch(x -> x >= 0 && x < 8);
     }
 
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
-        System.out.println("  1 2 3 4 5 6 7 8");
+        builder.append("  1 2 3 4 5 6 7 8\n");
 
+        Consumer<Piece> printer = x -> builder.append(x == null ? "_ " : x + " ").append("\u001B[0m");
 
-        
-        Arrays.stream(board).forEach(x -> );
-
-        for (int i = 0; i < 8; i++) {
-            builder.append(i + 1 + " ");
-
-            Arrays.stream(board[i]).forEach(x -> builder.append(x == null ? "_ " : x + " ").append("\u001B[0m"));
-//            for (int j = 0; j < 8; j++) {
-//                if(board[i][j] == null){
-//                    builder.append("_ ");
-//                }
-//                else{
-//                    builder.append(board[i][j]+" ");
-//                }
-//                builder.append("\u001B[0m");
-//            }
+        IntConsumer printLine = x -> {
+            builder.append(x + 1).append(" ");
+            Arrays.stream(board[x]).forEach(printer);
             builder.append("\n");
-        }
+        };
+
+        IntStream.range(0,8).forEach(printLine);
+
         return builder.toString();
     }
 }
