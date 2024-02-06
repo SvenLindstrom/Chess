@@ -1,4 +1,3 @@
-import java.util.Arrays;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
@@ -10,6 +9,7 @@ public class Bishop extends Piece{
     @Override
     protected boolean testMove(Piece[][] board, int[] position, int[] newPos) {
         String color = board[position[row]][position[colum]].color;
+
         return isMoveAllowed(position, newPos) && friendlyFire(board, newPos, color) && isPathClear(board, position, newPos);
     }
 
@@ -21,7 +21,6 @@ public class Bishop extends Piece{
     }
 
     protected static boolean isPathClear(Piece[][] board, int[] position, int[] newPos) {
-
         int[] higherOnBoard = newPos[row] > position[row]? position: newPos;
         int colMult = Math.max(position[colum], newPos[colum]) == higherOnBoard[colum]? -1: 1;
         int totalSteps = Math.abs(newPos[row] - position[row]);
@@ -30,9 +29,9 @@ public class Bishop extends Piece{
                 .mapToObj(x -> board[higherOnBoard[row] + x][higherOnBoard[colum] + (x * colMult)])
                 .noneMatch(Objects::nonNull);
     }
+
     @Override
     public String toString() {
         return super.toString() + "B";
     }
 }
-

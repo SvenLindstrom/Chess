@@ -54,17 +54,24 @@ public class Board {
     public String toString() {
         StringBuilder builder = new StringBuilder();
         System.out.println("  1 2 3 4 5 6 7 8");
+
+
+        
+        Arrays.stream(board).forEach(x -> );
+
         for (int i = 0; i < 8; i++) {
             builder.append(i + 1 + " ");
-            for (int j = 0; j < 8; j++) {
-                if(board[i][j] == null){
-                    builder.append("_ ");
-                }
-                else{
-                    builder.append(board[i][j]+" ");
-                }
-                builder.append("\u001B[0m");
-            }
+
+            Arrays.stream(board[i]).forEach(x -> builder.append(x == null ? "_ " : x + " ").append("\u001B[0m"));
+//            for (int j = 0; j < 8; j++) {
+//                if(board[i][j] == null){
+//                    builder.append("_ ");
+//                }
+//                else{
+//                    builder.append(board[i][j]+" ");
+//                }
+//                builder.append("\u001B[0m");
+//            }
             builder.append("\n");
         }
         return builder.toString();

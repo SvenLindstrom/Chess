@@ -25,8 +25,8 @@ public class Pawn extends Piece{
         if (position[colum] == newPos[colum]) {
             int start = direction == 1? position[row] + 1: newPos[row];
             int end = direction == 1? newPos[row] + 1: position[row];
-
             Object[] test = Arrays.stream(board, start, end).map(x -> x[position[colum]]).toArray();
+
             return Arrays.stream(test).noneMatch(Objects::nonNull) && (test.length == 1 || (test.length == 2 && !((Pawn) board[position[row]][position[colum]]).hasMoved));
         }
         else{
@@ -37,11 +37,9 @@ public class Pawn extends Piece{
     }
 
     private static Piece pawnPromotion(Piece pawn){
-
         Scanner scanner = new Scanner(System.in);
         System.out.println("piece promotion, select piece: Q, R, N, B");
         String newPiece = scanner.nextLine().strip().toLowerCase();
-
         Piece replace;
         switch (newPiece){
             case "q" -> replace = new Queen(pawn.color);
