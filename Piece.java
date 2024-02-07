@@ -11,8 +11,6 @@ public abstract class Piece {
 
     protected abstract boolean testMove(Piece[][] board, int[] position, int[] newPos);
 
-
-
     protected static boolean friendlyFire(Piece[][] board, int[] newPos, String color){
         return board[newPos[row]][newPos[colum]] == null || !color.equals(board[newPos[row]][newPos[colum]].color);
     }

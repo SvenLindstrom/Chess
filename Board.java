@@ -52,15 +52,12 @@ public class Board {
 
     public static Board changePosition( Board board,  int[] position ,  int[] newPos) {
         Piece[][] newBoard = new Piece[8][8];
-        Piece[][] oldBoard = board.board;
 
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if (i == position[row] && j == position[colum] ) newBoard[i][j] = null;
-                else if (i == newPos[row] && j == newPos[colum] ) newBoard[i][j] = oldBoard[position[row]][position[colum]];
-                else newBoard[i][j] = oldBoard[i][j];
-            }
-        }
+        IntStream.range(0,8).forEach(i -> System.arraycopy(board.board[i], 0, newBoard[i], 0, 8));
+
+        newBoard[position[row]][position[colum]] = null;
+        newBoard[newPos[row]][newPos[colum]] = board.board[position[row]][position[colum]];
+
         return new Board(newBoard);
     }
 
@@ -77,11 +74,11 @@ public class Board {
         StringBuilder builder = new StringBuilder();
         builder.append("  1 2 3 4 5 6 7 8\n");
 
-        Consumer<Piece> printer = x -> builder.append(x == null ? "_ " : x + " ").append("\u001B[0m");
+        Consumer<Piece> printerSquare = x -> builder.append(x == null ? "_ " : x + " ").append("\u001B[0m");
 
         IntConsumer printLine = x -> {
             builder.append(x + 1).append(" ");
-            Arrays.stream(board[x]).forEach(printer);
+            Arrays.stream(board[x]).forEach(printerSquare);
             builder.append("\n");
         };
 
